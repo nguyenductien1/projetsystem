@@ -1,0 +1,1 @@
+curl "https://coronavirusapi-france.now.sh/FranceLiveGlobalData" > data/global
