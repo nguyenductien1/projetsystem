@@ -9,22 +9,80 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script type="text/javascript" src="http://dev.jquery.com/view/trunk/plugins/autocomplete/jquery.autocomplete.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
 
     </head>
     <body>
-        
-        <h1>Date: {{ date }}</h1>
-        <h1>Nombre de cas comfirmés: {{ casConfirmes }}</h1>
-        <h1>Nombre de décés: {{ deces }}</h1>
-        
-        <form action="{{ url_for('search_by_date') }}" method="post">
-        <p>Choisiez votre date et departement de recherche</p>
-        <input type="date" name="bday" min="2020-01-01" required><br><br>
-        <input type="text" id="input_departement" name="departement" placeholder="Search.." required>
-        <input id="choisirDate" type="submit" value="Validez">
-        </form>
-        <script src="{{ url_for('static', filename="js/departement.js") }}"></script>
+        <div class="container-fluid">
+            <div class="jumbotron row">
+                <div class="col-lg-2">
+                    <p>Date: {{ date }}</p>
+                </div>
+                <div class="col-lg-2">
+                    <div>
+                        <p>Nombre de cas comfirmés:</p>
+                        <p>{{ casConfirmes }}</p>
+                    </div> 
+                </div>
+                <div class="col-lg-2">
+                    
+                    <div>
+                        <p>Nombre de décés:</p>
+                        <p>{{ deces }}</p>
+                    </div>
 
+                </div>
+                <div class="col-lg-6">
+                        <p>Choisiez votre date et departement de recherche</p>
+                        <div style="display: flex;">
+                            <input type="date" id="bday" style="font-size: 1.5rem; margin-right: 5px;" name="bday" min="2020-01-01" required><br><br>
+                            <input type="text" style="font-size: 1.5rem" id="input_departement" name="departement" placeholder="Choisiez le département" required> 
+                            <button id="ajax_search">Validez</button> 
+                            <button id="clear">Effacez</button> 
+                        </div> 
+                </div>
+               
+                
+            </div>
+        </div>
+        <div class="container">
+            <div class="col-lg-6">
+                Some graphs here!!!
+                <div class="container">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div id='search_result' class="container"></div>
+            </div>
+        </div>
+        
+
+        <script src="{{ url_for('static', filename="js/departement.js") }}"></script>
+        <script>
+            $('#ajax_search').click(function(){
+                var date = $('#bday').val();
+                var departement = $('#input_departement').val(); 
+                $.post('/search_by_date', {'bday':date, 'departement':departement}, function(data){
+                    $('#search_result').append(data);
+                })
+            })
+
+        </script>
+        <script>
+            $('#clear').click(function(){
+                $('#search_result').children().remove();
+            })
+        </script>    
+        <script>
+            var myLineChart = new Chart(myChart, {
+            type: 'line',
+            data: [0,0,327869,92966,23711,14130,12089,2635,69664,288052,142360,0],
+            options: options
+            });
+        </script>    
             
     </body>
 </html>

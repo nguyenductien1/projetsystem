@@ -30,9 +30,8 @@ def search_by_date():
     date = request.form['bday']
     departement = request.form['departement']
     departement_data.get_file_by_date(date)
-    #departement_data.get_departement_data(date, departement)
     data_json = departement_data.get_departement_data(date, departement)
     nom = data_json['dep_data'][0]['nom']
     hospitalises = data_json['dep_data'][0]['hospitalises']
     deces = data_json['dep_data'][0]['deces']
-    return render_template('_search_by_date.html', title=nom, date = date, deces = deces, hospitalises = hospitalises)
+    return '<div class="row">'+'<div class="col-lg-2">'+ 'Date: ' + date +'</div>' + '<div>' + '<div class="col-lg-2">'+ 'Département: ' + nom +'</div>' + '<div>' + '<div class="col-lg-2">'+ 'Déces: ' + str(deces) +'</div>' + '<div>'+ '<div class="col-lg-2">'+ 'Hospitalises: ' + str(hospitalises) + '</div>'+ '</div>'

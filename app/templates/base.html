@@ -1,0 +1,56 @@
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }}</title>
+        {% else %}
+        <title>Situation de COVID19 en France</title>
+        {% endif %}
+        <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="jumbotron row">
+                <div class="col-lg-2">
+                    <p>Date: {{ date }}</p>
+                </div>
+                <div class="col-lg-2">
+                    <div>
+                        <p>Nombre de cas comfirmés:</p>
+                        <p>{{ casConfirmes }}</p>
+                    </div> 
+                </div>
+                <div class="col-lg-2">
+                    
+                    <div>
+                        <p>Nombre de décés:</p>
+                        <p>{{ deces }}</p>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-6">
+                    <form action="{{ url_for('search_by_date') }}" method="post">
+                        <p>Choisiez votre date et departement de recherche</p>
+                        <div style="display: flex;">
+                            <input type="date" style="font-size: 1.5rem; margin-right: 5px;" name="bday" min="2020-01-01" required><br><br>
+                            <input type="text" style="font-size: 1.5rem" id="input_departement" name="departement" placeholder="Choisiez le département" required> 
+                            <input id="choisirDate" type="submit" value="Validez" >
+                        </div>
+                        
+                    </form> 
+
+                </div>
+               
+                
+            </div>
+        </div>
+        {% block content %}{% endblock %}
+        <script src="{{ url_for('static', filename="js/departement.js") }}"></script>
+            
+    </body>
+</html>
