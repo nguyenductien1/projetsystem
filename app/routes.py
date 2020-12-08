@@ -35,3 +35,9 @@ def search_by_date():
     hospitalises = data_json['dep_data'][0]['hospitalises']
     deces = data_json['dep_data'][0]['deces']
     return '<div class="row">'+'<div class="col-lg-2">'+ 'Date: ' + date +'</div>' + '<div>' + '<div class="col-lg-2">'+ 'Département: ' + nom +'</div>' + '<div>' + '<div class="col-lg-2">'+ 'Déces: ' + str(deces) +'</div>' + '<div>'+ '<div class="col-lg-2">'+ 'Hospitalises: ' + str(hospitalises) + '</div>'+ '</div>'
+
+@app.route('/get_hospital_mois', methods=['GET'])
+def get_hospital_mois():
+    with open('data/_Mois.json', 'r') as f:
+        my_dict = json.load(f)
+        return my_dict
