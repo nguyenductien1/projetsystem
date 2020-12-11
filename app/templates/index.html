@@ -56,15 +56,17 @@
     </div>
     <div class="container">
         <div class="col-lg-6">
-            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+            <canvas id="myChart1"></canvas>
         </div>
         <div class="col-lg-6">
             <div id='search_result' class="container"></div>
+
         </div>
     </div>
 
 
     <script src="{{ url_for('static', filename="js/departement.js") }}"></script>
+
     <script>
         $('#ajax_search').click(function () {
             var date = $('#bday').val();
@@ -80,10 +82,9 @@
             $('#search_result').children().remove();
         })
     </script>
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
     <script>
         window.onload = function () {
-
             $.get('/get_hospital_mois', {}, function (data_return) {
                 var m1 = data_return['M1'];
                 var m2 = data_return['M2'];
@@ -97,49 +98,19 @@
                 var m10 = data_return['M10'];
                 var m11 = data_return['M11'];
                 var m12 = data_return['M12'];
-                var chart = new CanvasJS.Chart("chartContainer", {
-                    animationEnabled: true,
-                    title: {
-                        text: "Nombre de cas hospitalises"
-                    },
-                    axisY: {
-                        title: "Patients par mois",
-                        valueFormatString: "#0,,.",
-                        suffix: "p",
-                        stripLines: [{
-                            value: 3366500,
-                            label: "Average"
-                        }]
-                    },
-                    data: [{
-                        type: "line",
-                        indexLabelFontSize: 16,
-                        yValueFormatString: "#,### Units",
-		                xValueFormatString: "YYYY",
-                        dataPoints: [
-                        {x: new Date(2020, 1), y: m1},
-                        {x: new Date(2020, 2), y: m2},
-                        {x: new Date(2020, 3), y: m3},
-                        {x: new Date(2020, 4), y: m4},
-                        {x: new Date(2020, 5), y: m5},
-                        {x: new Date(2020, 6), y: m6},
-                        {x: new Date(2020, 7), y: m7},
-                        {x: new Date(2020, 8), y: m8},
-                        {x: new Date(2020, 9), y: m9},
-                        {x: new Date(2020, 10), y: m10},
-                        {x: new Date(2020, 11), y: m11},
-                        {x: new Date(2020, 12), y: m12}
-                        ]
-                    }]
-
+                var x = new Chart(document.getElementById("myChart1"), {
+                    type: 'scatter',
+                    data: {
+                        datasets: [{label: "Les cas hospitalises par mois",data: [{x: 1,y: m1}, {x: 2,y: m2}, {x: 3,y: m3}, {x: 4,y: m4},
+                        {x: 5,y: m5}, {x: 6,y: m6}, {x: 7,y: m7}, {x: 8,y: m8},
+                        {x: 9,y: m9}, {x: 10,y: m10}, {x: 11,y: m11}, {x: 12,y: m12}],}]},
+                    options: {responsive: true}
                 });
-                chart.render();
 
             })
 
-        }    
+        }
     </script>
-
 </body>
 
 </html>

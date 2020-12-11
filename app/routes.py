@@ -24,7 +24,7 @@ def index():
     deces = my_dict['FranceGlobalLiveData'][0]['deces']
     return render_template('index.html', title='Situation COVID19 en France', date = date, casConfirmes = casConfirmes, deces = deces)
 
-@app.route('/search_by_date', methods=['POST'])
+@app.route('/search_by_date', methods=['POST'])  #On prend les valeur 
 def search_by_date():
     departement_data = getDepartementData()
     date = request.form['bday']

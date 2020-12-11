@@ -23,7 +23,7 @@ class getDepartementData():
     def get_file_by_date(self, date):
         my_file = Path("data/"+date+".json")
         if not my_file.is_file():
-            request = requests.get("https://coronavirusapi-france.now.sh/AllDataByDate?date="+date)
+            request = requests.get("https://coronavirusapi-france.now.sh/AllDataByDate?date="+date) #c
             stt = request.status_code
             json_text = request.text
             if stt==200:
@@ -35,7 +35,7 @@ class getDepartementData():
         with open("data/"+s_date+".json", "r") as f:
             my_dict = json.load(f)
         for element in my_dict['allFranceDataByDate']:
-            s = departement
+            s = departement #nom(numero) vient de client
             dept_code = "DEP-"+re.search(r'\(([^)]+)\)', s).group(1) 
             if element['code'] == dept_code:
                 code = [element['code']][0]
