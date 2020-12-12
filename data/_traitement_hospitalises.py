@@ -9,7 +9,7 @@ import re
 m = range(1,13)
 d = range(1,32)
 text = ""
-
+#ce script pour traiter les données des nouvelles hospitalisations en France, par mois.
 for i in m:
     total_mois = 0
     for j in d: 
@@ -31,17 +31,12 @@ for i in m:
             my_dict = json.load(f)
             nbr_jour_dep = 0
             for element in my_dict['allFranceDataByDate']:
-                if 'nouvellesHospitalisations' in element:
+                if 'nouvellesHospitalisations' in element and element['nom']=='France':
                     nbr_jour_dep = nbr_jour_dep + int(element['nouvellesHospitalisations'])
-                else:
-                    nbr_jour_dep = nbr_jour_dep + 0
             nbr_jour = nbr_jour + nbr_jour_dep 
-            #print("mois",' ',i,"jour",j,':', nbr_jour)
             total_mois = total_mois + nbr_jour
-    #print(total_mois)
     text = text + '"'+'M'+str(i)+'"' +':'+str(total_mois) +',' 
     text_json = '{'+ text[:-1] +'}' 
-#print(text_json)
-new_file = open('_Mois'+".json", "w")
+new_file = open('_hospitalises'+".json", "w")
 new_file.write(text_json)
 new_file.close()
